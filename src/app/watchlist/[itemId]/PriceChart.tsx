@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { UserData } from "./Data";
+// import { UserData } from "./Data";
 import LineChart from "./LineChart";
 import { useRouter } from "next/router";
 import PricesData from "@/app/types/PricesData";
