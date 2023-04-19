@@ -37,3 +37,8 @@ package-lock.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+#prisma client
+
+/prisma/prisma-client
