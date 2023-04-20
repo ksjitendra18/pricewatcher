@@ -10,7 +10,7 @@ export default function Home() {
           Shop Smartly
         </h2>
         <p className="mt-3 text-xl">
-          Save money through our price predictor and price watcher
+          Save money. Track the price and buy when it gets low!
         </p>
 
         <div className="flex mt-5 gap-5 md:flex-row flex-col">

@@ -1,7 +1,5 @@
 export default async function checkAuth() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/status`
-  );
+  const res = await fetch(`/api/auth/status`);
   const resData = await res.json();
   return resData;
 }
