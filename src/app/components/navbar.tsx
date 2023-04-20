@@ -21,7 +21,7 @@ export default function Navbar() {
       <div className="header relative  py-2 md:py-4 px-5 md:px-11 flex justify-between items-center">
         {/* <h1 className={`${dmSans.className} font-bold text-3xl`}> */}
         <h1 className="font-bold text-2xl md:text-3xl">
-          <Link href="/">Price Predictor</Link>
+          <Link href="/">Price Watchr</Link>
         </h1>
 
         <div className="hidden md:flex items-center gap-20 ">

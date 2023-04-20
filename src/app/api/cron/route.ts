@@ -1,4 +1,5 @@
 import intiliaseScrape from "@/app/apiHelpers/performScrape";
+import prisma from "@/app/utils/prisma";
 
 export async function GET() {
   try {
