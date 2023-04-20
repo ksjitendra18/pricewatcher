@@ -15,7 +15,7 @@ export async function GET() {
       status: 200,
     });
   } catch (e) {
-    return new Response(JSON.stringify({ message: "Cron Failed" }), {
+    return new Response(JSON.stringify({ message: "Cron Failed", error: e }), {
       status: 500,
     });
   }

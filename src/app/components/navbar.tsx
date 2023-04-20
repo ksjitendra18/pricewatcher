@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import useAuthStore from "../store/authStore";
-import Cookies from "js-cookie";
 import checkAuth from "../utils/checkAuth";
 
 export default function Navbar() {
@@ -10,7 +9,6 @@ export default function Navbar() {
   const { user, logout, setUser } = useAuthStore();
 
   useEffect(() => {
-    console.log("use effect ran");
     async function setAuth() {
       const userData = await checkAuth();
       setUser(userData.data);
