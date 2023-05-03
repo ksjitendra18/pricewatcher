@@ -54,6 +54,10 @@ export default function Login() {
       setError({ isError: true, errorMessage: resData.message });
       setLoading(false);
     }
+    if (res.status === 500) {
+      setError({ isError: true, errorMessage: resData.message });
+      setLoading(false);
+    }
     console.log(res.status);
 
     if (res.status === 200 && resData.success === true) {

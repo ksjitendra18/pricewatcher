@@ -1,16 +1,11 @@
 import jwt from "jsonwebtoken";
 import prisma from "@/app/utils/prisma";
 const secret = process.env.JWT_SECRET;
-import { cookies } from "next/headers";
-import fetchUserAuthStatus from "@/app/apiHelpers/fetchUserAuthStatus";
 
-export async function GET(request: Request) {
-  const cookieStore = cookies();
-  const token = cookieStore.get("auth-token");
+export async function POST(request: Request) {
+  const { cookie: token } = await request.json();
 
   try {
-    console.log("inside try", token);
-
     if (token === undefined || token === null) {
       return new Response(
         JSON.stringify({ message: "Unauthorized: No token provided" }),
@@ -19,7 +14,7 @@ export async function GET(request: Request) {
         }
       );
     }
-    const decoded: any = jwt.verify(token.value, secret!);
+    const decoded: any = jwt.verify(token, secret!);
 
     const user = await prisma.user.findUnique({
       where: { userId: decoded.userId },
@@ -45,13 +40,3 @@ export async function GET(request: Request) {
     );
   }
 }
-
-// if (token === "undefined" || token === null) {
-//   return res.status(401).json({ message: "Unauthorized" });
-// } else {
-//   const decoded: any = jwt.decode(token!);
-
-//   res.status(200).json({ success: true, data: { userId: decoded.userId } });
-// }
-
-// 25/04 changing to reusable function

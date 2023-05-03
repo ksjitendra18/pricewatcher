@@ -111,7 +111,7 @@ export async function GET() {
     });
 
     return new Response(JSON.stringify({ message: "Cron success" }), {
-      status: 200,
+      status: 201,
     });
   } catch (e) {
     return new Response(JSON.stringify({ message: "Cron Failed", error: e }), {
@@ -120,4 +120,4 @@ export async function GET() {
   }
 }
 
-// export const revalidate = "60"
+export const revalidate = 60;

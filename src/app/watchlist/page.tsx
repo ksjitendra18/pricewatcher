@@ -1,48 +1,34 @@
-"use client";
-import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import useAuthStore from "../store/authStore";
-import { useEffect, useState } from "react";
 
-import { URL } from "../utils/url";
+import { cookies } from "next/headers";
 import { WatchlistType } from "../types/Watchlist";
 import WatchListCard from "./watchListCard";
-import LoadingSpinner from "../components/loadingSpinner";
 
-export default function Watchlist() {
-  const router = useRouter();
-  const { user } = useAuthStore();
+import jwt from "jsonwebtoken";
 
-  const [loading, setLoading] = useState(true);
+const secret = process.env.JWT_SECRET;
 
-  const [allWatchList, setAllWatchList] = useState<WatchlistType[]>([]);
+export const metadata = {
+  title: "Watchlist | PriceWatchr",
+};
 
-  // if (!user) {
-  //   router.replace("/");
-  // }
+const fetchWatchlists = async (userId: string): Promise<WatchlistType[]> => {
+  const watchlists = await prisma.watchlist.findMany({
+    where: { userId: userId },
+  });
+  return watchlists;
+};
 
-  const fetchAllWatchlist = async () => {
-    const res = await fetch(`/api/watchlist/getAll`);
-    const resData = await res.json();
-    console.log(resData);
+export default async function Watchlist() {
+  const cookieStore = cookies();
+  const token = cookieStore.get("auth-token");
 
-    setAllWatchList(resData.data);
-    setLoading(false);
-  };
+  const decoded: any = jwt.verify(token!.value, secret!);
 
-  useEffect(() => {
-    fetchAllWatchlist();
-  }, []);
-
-  console.log("watchlist", allWatchList);
+  const allWatchList = await fetchWatchlists(decoded.userId);
 
   return (
     <section>
-      <Head>
-        <title>Watchlist | Price Watcher</title>
-      </Head>
-
       <div className="flex items-center flex-col md:flex-row justify-between md:justify-start gap-5 mt-5 ">
         <h2 className="text-4xl text-primary font-semibold ">
           Your watchlists
@@ -55,25 +41,19 @@ export default function Watchlist() {
         </Link>
       </div>
 
-      {loading ? (
-        <div className="flex justify-center items-center mt-20">
-          <LoadingSpinner />
-        </div>
-      ) : (
-        <>
-          {allWatchList?.length < 1 ? (
-            <div className="mt-10 text-xl">
-              <p>You have no watchlists yet. Add a new item to watchlist!</p>
-            </div>
-          ) : (
-            <div className="mt-10 flex flex-col gap-5">
-              {allWatchList?.map((watchlist) => (
-                <WatchListCard key={watchlist.itemId} watchlist={watchlist} />
-              ))}
-            </div>
-          )}
-        </>
-      )}
+      <>
+        {allWatchList?.length < 1 ? (
+          <div className="mt-10 text-xl">
+            <p>You have no watchlists yet. Add a new item to watchlist!</p>
+          </div>
+        ) : (
+          <div className="mt-10 flex flex-col gap-5">
+            {allWatchList?.map((watchlist) => (
+              <WatchListCard key={watchlist.itemId} watchlist={watchlist} />
+            ))}
+          </div>
+        )}
+      </>
     </section>
   );
 }
