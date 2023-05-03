@@ -7,7 +7,7 @@ import { URL } from "../utils/url";
 
 import useAuthStore from "../store/authStore";
 import { useRouter } from "next/navigation";
-import Loading from "@/loading";
+import Loading from "@/app/loading";
 import LoadingSpinner from "../components/loadingSpinner";
 import { Loader } from "../components/loader";
 export default function Login() {

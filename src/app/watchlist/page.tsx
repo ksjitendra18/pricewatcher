@@ -3,7 +3,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { WatchlistType } from "../types/Watchlist";
 import WatchListCard from "./watchListCard";
-
+import prisma from "../utils/prisma.ts";
 import jwt from "jsonwebtoken";
 
 const secret = process.env.JWT_SECRET;
